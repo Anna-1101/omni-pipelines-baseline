@@ -131,7 +131,7 @@ if (args$method_name == "seurat") {
     n_cluster, args$n_comp, args$n_neig, args$n_hvg, args$filter,
     time, clustering_info
   )
-} else if (arg$method_name == "random") {
+} else if (args$method_name == "random") {
   random_r_path <- file.path(run_dir, "RandomClusters.R")
   source(random_r_path)
   output_data <- run_random(
