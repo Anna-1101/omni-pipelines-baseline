@@ -34,7 +34,7 @@ parser$add_argument(
   "--method_name",
   dest = "method_name", type = "character",
   help = "name of the method",
-  choices = c("osca", "scrapper", "seurat"), required = TRUE
+  choices = c("osca", "scrapper", "seurat", "random"), required = TRUE
 )
 parser$add_argument(
   "--d_cluster",
@@ -66,6 +66,12 @@ parser$add_argument(
   help = "filtering (manual uses suggested cutoffs, auto uses package QC)",
   choices = c("manual", "auto"),
   default = "manual", required = FALSE
+)
+parser$add_argument(
+  "--seed",
+  dest = "seed", type = "integer",
+  help = "random seed (used by the random baseline)",
+  default = 11, required = FALSE
 )
 
 args <- parser$parse_args()
@@ -123,6 +129,14 @@ if (args$method_name == "seurat") {
   output_data <- run_scrapper(
     sce,
     n_cluster, args$n_comp, args$n_neig, args$n_hvg, args$filter,
+    time, clustering_info
+  )
+} else if (arg$method_name == "random") {
+  random_r_path <- file.path(run_dir, "RandomClusters.R")
+  source(random_r_path)
+  output_data <- run_random(
+    sce,
+    n_cluster, arg$seed,
     time, clustering_info
   )
 }
