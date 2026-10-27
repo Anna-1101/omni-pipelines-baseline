@@ -136,7 +136,7 @@ if (args$method_name == "seurat") {
   source(random_r_path)
   output_data <- run_random(
     sce,
-    n_cluster, arg$seed,
+    n_cluster, args$seed,
     time, clustering_info
   )
 }
